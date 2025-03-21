@@ -42,7 +42,7 @@ const loop = setInterval(() => {
 
 document.addEventListener("keydown", jump);
 
-// object destructuring dessistruturar o objeto no caso ai foi tirar o evento e colocar o target direto pois ele sinboliza o input
+// object destructuring desistruturar o objeto no caso ai foi tirar o evento e colocar o target direto pois ele sinboliza o input
 const validateInput = ({ target }) => {
 
   if(target.value.length > 2){
