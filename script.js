@@ -1,5 +1,10 @@
 const mario = document.querySelector(".mario");
 const pipe = document.querySelector(".pipe");
+const menu = document.getElementById("login")
+const input = document.getElementById("username")
+const button = document.getElementById("start-button")
+const form = document.querySelector(".login-forma")
+
 
 const jump = () => {
   mario.classList.add("jump");
@@ -36,3 +41,30 @@ const loop = setInterval(() => {
 }, 10);
 
 document.addEventListener("keydown", jump);
+
+// object destructuring dessistruturar o objeto no caso ai foi tirar o evento e colocar o target direto pois ele sinboliza o input
+const validateInput = ({ target }) => {
+
+  if(target.value.length > 2){
+    button.removeAttribute("disabled")
+  }else{
+    button.setAttribute("disabled", '');
+  }
+}
+
+// eniviar o formulario
+const handleSubimit = (e) => {
+  e.preventDefault();
+
+  //salvar no local storage
+  localStorage.setItem( 'player', input.value);
+  window.location = "game.html"
+}
+
+
+input.addEventListener('input', validateInput);
+form.addEventListener('submit', handleSubimit )
+  
+
+
+
