@@ -1,36 +1,36 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Game Mario</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css" />
     <script src="script.js" defer></script>
-</head>
-<body>
-
-    <audio id="som"  autoplay loop >
-        <source src="./music/musica_login.mp3" type="audio/mp3">
+  </head>
+  <body>
+    <audio id="som" autoplay loop>
+      <source src="./music/musica_login.mp3" type="audio/mp3" />
     </audio>
     <audio src="./music/game-over.mp3" id="gameOver"></audio>
     <audio src="./music/pulo.mp3" id="somPulo"></audio>
     <audio src="./music/morte-mario.mp3" id="somMorteMario"></audio>
 
     <div class="cenario">
-        <img src="./image/5cb08848bfe72cc.png" class="abaixar">
-        <img src="./image/bill-removebg-preview.png" class="bill">
-        <img src="./image/clouds.png" class="clouds">
-        <img src="./image/mario.gif" class="mario">
-        <img src="./image/pipe.png" class="pipe">
-        <!-- <img src="./image/bill-removebg-preview.png" alt=""> -->
+      <img src="./image/5cb08848bfe72cc.png" class="abaixar" />
+      <img src="./image/bill-removebg-preview.png" class="bill" />
+      <img src="./image/clouds.png" class="clouds" />
+      <img src="./image/mario.gif" class="mario" />
+      <img src="./image/pipe.png" class="pipe" />
+      <!-- <img src="./image/bill-removebg-preview.png" alt=""> -->
     </div>
     <!-- tela de game-over -->
     <div id="game-over">
-        <h3>Game Over</h3>
-        <img src="./image/png-transparent-super-mario-64-luigi-princess-peach-tired-heroes-hand-cartoon-removebg-preview.png" alt="">
-        <button onclick="window.location.reload()">Reset</button>
-
+      <h3>Game Over</h3>
+      <img
+        src="./image/png-transparent-super-mario-64-luigi-princess-peach-tired-heroes-hand-cartoon-removebg-preview.png"
+        alt=""
+      />
+      <button onclick="window.location.reload()">Reset</button>
     </div>
-    
-</body>
+  </body>
 </html>

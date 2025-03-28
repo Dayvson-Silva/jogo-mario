@@ -1,14 +1,15 @@
 const mario = document.querySelector(".mario");
 const pipe = document.querySelector(".pipe");
+const bill = document.querySelector(".bill")
 const menu = document.getElementById("login");
 const input = document.getElementById("username");
 const button = document.getElementById("start-button");
 const form = document.querySelector(".login-forma");
 const theEnd = document.getElementById("game-over");
 
-const somPulo = document.getElementById('somPulo');
-const somMorteMario = document.getElementById('somMorteMario');
-const gameOver = document.getElementById('gameOver');
+const somPulo = document.getElementById("somPulo");
+const somMorteMario = document.getElementById("somMorteMario");
+const gameOver = document.getElementById("gameOver");
 
 const jump = () => {
   if (!somPulo.paused) {
@@ -16,23 +17,26 @@ const jump = () => {
     somPulo.currentTime = 0;
   }
   mario.classList.add("jump");
-  somPulo.play();  // Toca o som do pulo
-  
+  somPulo.play(); // Toca o som do pulo
+
   setTimeout(() => {
     mario.classList.remove("jump");
   }, 500);
 };
 
 const loop = setInterval(() => {
+  const billPosition = bill.offsetLeft 
   const pipePosition = pipe.offsetLeft;
   // getComputedStyle vai pegar todos os estilos aplicados ao mario
-  const marioPosition = +window.getComputedStyle(mario).bottom.replace("px", "");
+  const marioPosition = +window
+    .getComputedStyle(mario)
+    .bottom.replace("px", "");
 
-  if (pipePosition <= 90 && pipePosition > 0 && marioPosition < 70) {
+  if (pipePosition <= 90 && pipePosition > 0 && marioPosition < 70 || billPosition <= 90 && billPosition > 0 && marioPosition < 70) {
     // Quando o Mario colidir com o pipe:
     // Interrompe o som de pulo (caso esteja tocando)
     somPulo.pause();
-    
+
     // Toca o som de morte do Mario
     somMorteMario.play();
 
@@ -42,6 +46,10 @@ const loop = setInterval(() => {
 
     mario.style.animation = "none";
     mario.style.bottom = `${marioPosition}px`;
+
+    // pata o mpvimento do bill  e  do mario
+    bill.style.animation = "none"
+    bill.style.left = `${billPosition}px`
 
     // Aparece a imagem do Mario morrendo
     mario.src = "./image/game-over.png";
@@ -54,7 +62,7 @@ const loop = setInterval(() => {
     theEnd.style.animation = "nome-game-over 10s ease ";
 
     // Pausa o som de fundo (se houver)
-    const som = document.getElementById('som');
+    const som = document.getElementById("som");
     som.pause();
 
     // Toca o som de game over após o som de morte do Mario
@@ -67,14 +75,18 @@ const loop = setInterval(() => {
   }
 }, 10);
 
-document.addEventListener("keydown", jump);
+document.addEventListener("keypress", function(e){
+  if(e.key === "w"){
+    jump();
+  }
+});
 
 // Object destructuring para validar o input
 const validateInput = ({ target }) => {
-  if(target.value.length > 2) {
+  if (target.value.length > 2) {
     button.removeAttribute("disabled");
   } else {
-    button.setAttribute("disabled", '');
+    button.setAttribute("disabled", "");
   }
 };
 
@@ -83,17 +95,17 @@ const handleSubimit = (e) => {
   e.preventDefault();
 
   // Salva o nome do jogador no localStorage
-  localStorage.setItem('player', input.value);
+  localStorage.setItem("player", input.value);
 
   // Redireciona para o jogo
   window.location = "game.html";
 };
 
-input.addEventListener('input', validateInput);
-form.addEventListener('submit', handleSubimit);
+input.addEventListener("input", validateInput);
+form.addEventListener("submit", handleSubimit);
 
 // Espera o usuário clicar no botão para iniciar o áudio
-document.getElementById('start-button').addEventListener('click', function() {
-  const som = document.getElementById('som');
+document.getElementById("start-button").addEventListener("click", function () {
+  const som = document.getElementById("som");
   som.play(); // Inicia o som
 });
