@@ -1,3 +1,14 @@
+
+
+let pontos = 0;  // Inicializa a variável de pontos
+const contador = document.querySelector('.contador'); // Referência para o elemento da pontuação
+
+// Função para incrementar a pontuação
+const incrementarPontos = () => {
+  pontos++;  // Aumenta os pontos
+  contador.textContent = `Pontos: ${pontos}`;  // Atualiza a pontuação na tela
+};
+
 const mario = document.querySelector(".mario");
 const pipe = document.querySelector(".pipe");
 const bill = document.querySelector(".bill")
@@ -8,19 +19,27 @@ const button = document.getElementById("start-button");
 const form = document.querySelector(".login-forma");
 const theEnd = document.getElementById("game-over");
 
-// const nome = document.querySelector(".nome")
 
 const somPulo = document.getElementById("somPulo");
 const somMorteMario = document.getElementById("somMorteMario");
 const gameOver = document.getElementById("gameOver");
 
+// Variáveis de controle do jogo para o mario se abaixar quando bil vir
+let marioAbaixado = false;
 
+window.onload = () => {
+  // Recupera o nome do jogador do localStorage
+  const playerName = localStorage.getItem('player');
 
-// window.onload = () => {
-//   nome.innerHTML = localStorage.getItem('nome')
-//   console.log(nome);
-  
-// }
+  // Se o nome do jogador existir no localStorage, exibe no jogo
+  if (playerName) {
+    const playerNameElement = document.querySelector('.nome');
+    playerNameElement.textContent = `Player: ${playerName}`; // Exibe o nome na tela
+  } else {
+    const playerNameElement = document.querySelector('.nome');
+    playerNameElement.textContent = "Bem-vindo, jogador!"; // Caso o nome não esteja no localStorage
+  }
+}
 
 const jump = () => {
   if (!somPulo.paused) {
@@ -37,7 +56,6 @@ const jump = () => {
 
 const loop = setInterval(() => {
 
-  // let marioAbaixado= false
 
   const billPositionX = bill.offsetLeft 
   const pipePosition = pipe.offsetLeft;
@@ -46,7 +64,9 @@ const loop = setInterval(() => {
     .getComputedStyle(mario)
     .bottom.replace("px", "");
 
-  if ((pipePosition <= 90 && pipePosition > 0 && marioPosition < 70) || (billPositionX <= 90 && billPositionX > 0 && marioPosition < 70 && !marioAbaixado )) {
+  if ((pipePosition <= 90 && pipePosition > 0 && marioPosition < 70) || (billPositionX <= 90 && billPositionX > 0 && marioPosition < 70 && !marioAbaixado)) {
+    
+    incrementarPontos();
     
     // Quando o Mario colidir com o pipe:
     // Interrompe o som de pulo (caso esteja tocando)
@@ -85,6 +105,7 @@ const loop = setInterval(() => {
       gameOver.play(); // Toca o som de game over depois que o som da morte terminar
     };
 
+    incrementarPontos();
     // Para o loop do jogo
     clearInterval(loop);
   }
