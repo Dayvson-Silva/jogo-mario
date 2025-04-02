@@ -1,18 +1,19 @@
-let pontos = 0;  // Inicializa a variável de pontos
-const contador = document.querySelector('.contador'); // Referência para o elemento da pontuação
+let pontos = 0; // Inicializa a variável de pontos
+const contador = document.querySelector(".contador"); // Referência para o elemento da pontuação
 
 // Flag para verificar se o jogo terminou
 let gameOverFlag = false;
-let pipePassado = false;  // Flag para verificar se o Mario passou o pipe
 
 // Função para incrementar a pontuação
 const incrementarPontos = () => {
-  if (!gameOverFlag) {  // Verifica se o jogo não acabou
-    pontos++;  // Aumenta os pontos
-    contador.textContent = `${pontos}`;  // Atualiza a pontuação na tela
+  if (!gameOverFlag) {
+    // Verifica se o jogo não acabou
+    pontos = Math.floor((pontos + 0.11) * 10) / 10;
+    contador.textContent = `${Math.floor(pontos)}`; // Atualiza a pontuação na tela
   }
 };
 
+// Referências para os elementos
 const mario = document.querySelector(".mario");
 const pipe = document.querySelector(".pipe");
 const bill = document.querySelector(".bill");
@@ -23,9 +24,45 @@ const button = document.getElementById("start-button");
 const form = document.querySelector(".login-forma");
 const theEnd = document.getElementById("game-over");
 
+// Audio
+const som = document.getElementById("som");
 const somPulo = document.getElementById("somPulo");
 const somMorteMario = document.getElementById("somMorteMario");
 const gameOver = document.getElementById("gameOver");
+const mute = document.getElementById("mute");
+const unmute = document.getElementById("unmute");
+
+// Volume das musicas
+somPulo.volume = 0.1;
+somMorteMario.volume = 0.2;
+gameOver.volume = 0.2;
+
+// Mutar musica
+const muteMusic = () => {
+  som.pause();
+  som.currentTime = 0;
+  mute.style.display = "none";
+  unmute.style.display = "block";
+};
+const unmuteMusic = () => {
+  som.play();
+  mute.style.display = "block";
+  unmute.style.display = "none";
+};
+mute.addEventListener("click", muteMusic);
+unmute.addEventListener("click", unmuteMusic);
+
+document.addEventListener("keydown", (e) => {
+  if (e.code === "KeyM") {
+    if (som.paused) {
+      // Se a tecla "M" tiver pressionada e o som estiver pausado, ele vai despausar a musica
+      unmuteMusic();
+    } else {
+      // Se a tecla "M" tiver pressionada e o som estiver tocando, ele vai pausar a musica
+      muteMusic();
+    }
+  }
+});
 
 // Variáveis de controle do jogo para o mario se abaixar quando bill vir
 let marioAbaixado = false;
@@ -33,26 +70,28 @@ let marioMorreu = false; // Flag para controlar se o Mario morreu
 
 window.onload = () => {
   // Recupera o nome do jogador do localStorage
-  const playerName = localStorage.getItem('player');
-  
+  const playerName = localStorage.getItem("player");
+
   // Se o nome do jogador existir no localStorage, exibe no jogo
   if (playerName) {
-    const playerNameElement = document.querySelector('.nome');
+    const playerNameElement = document.querySelector(".nome");
     playerNameElement.textContent = `Player: ${playerName}`; // Exibe o nome na tela
   } else {
-    const playerNameElement = document.querySelector('.nome');
+    const playerNameElement = document.querySelector(".nome");
     playerNameElement.textContent = "Bem-vindo, jogador!"; // Caso o nome não esteja no localStorage
   }
 };
 
+// Jump
 const jump = () => {
   if (!somPulo.paused) {
     // Caso o som do pulo esteja tocando, reinicia ele
     somPulo.currentTime = 0;
   }
-  mario.classList.add("jump");
   somPulo.play(); // Toca o som do pulo
-  
+
+  mario.classList.add("jump");
+
   setTimeout(() => {
     mario.classList.remove("jump");
   }, 500);
@@ -63,19 +102,25 @@ const loop = setInterval(() => {
 
   const billPositionX = bill.offsetLeft;
   const pipePosition = pipe.offsetLeft;
-  const marioPosition = +window.getComputedStyle(mario).bottom.replace("px", "");
+  const marioPosition = +window
+    .getComputedStyle(mario)
+    .bottom.replace("px", "");
 
   // Verifica se o Mario passou o pipe e ainda não marcou pontos
-  if (pipePosition <= 90 && pipePosition > 0 && !pipePassado) {
-    // Quando o Mario passa o pipe, incrementa os pontos
-    pipePassado = false;  // Impede que o ponto seja contado várias vezes
+  if (!gameOverFlag) {
     incrementarPontos();
   }
 
   // Verifica colisão com o pipe ou com o bill
-  if ((pipePosition <= 90 && pipePosition > 0 && marioPosition < 70 ) || 
-      (billPositionX <= 90 && billPositionX > 0 && marioPosition < 70 && !marioAbaixado)) {
-   
+  if (
+    (pipePosition <= 90 && pipePosition > 0 && marioPosition < 70) ||
+    (billPositionX <= 90 &&
+      billPositionX > 0 &&
+      marioPosition < 70 &&
+      !marioAbaixado)
+  ) {
+    gameOverFlag = true;
+    marioMorreu = true; // Mario morreu, então desabilitamos o abaixar
 
     // Quando o Mario colidir com o pipe:
     somPulo.pause();
@@ -84,7 +129,7 @@ const loop = setInterval(() => {
     // Para o movimento do pipe e do Mario
     pipe.style.animation = "none";
     pipe.style.left = `${pipePosition}px`;
-    
+
     mario.style.animation = "none";
     mario.style.bottom = `${marioPosition}px`;
 
@@ -94,11 +139,13 @@ const loop = setInterval(() => {
     mario.src = "./image/game-over.png";
     mario.style.width = "55px";
     mario.style.marginLeft = "40px";
+    mario.style.animation = "dead 1s ease";
+    mario.style.top = "200%";
     somPulo.pause();
 
     // Exibe o Game Over
     theEnd.style.bottom = "0px";
-    theEnd.style.animation = "nome-game-over 10s ease ";
+    theEnd.style.animation = "nome-game-over 3s ease ";
 
     const som = document.getElementById("som");
     som.pause();
@@ -107,22 +154,20 @@ const loop = setInterval(() => {
       gameOver.play();
     };
 
-    gameOverFlag = true;
-    marioMorreu = true; // Mario morreu, então desabilitamos o abaixar
-
     clearInterval(loop);
   }
 }, 10);
 
-// Mario pulo usando space
+// Mario pulo usando space (keys de pulo)
 document.addEventListener("keypress", (e) => {
-  if(e.code === "Space" && !gameOverFlag) {
+  if (e.code === "Space" && !gameOverFlag || e.code === "KeyW" && !gameOverFlag || e.code === "ArrowUp" && !gameOverFlag) {
     jump();
   }
 });
 
-const agaichar = () => {
-  if (!marioMorreu) {  // Se o Mario não morreu, ele pode abaixar
+const agachar = () => {
+  if (!marioMorreu) {
+    // Se o Mario não morreu, ele pode abaixar
     marioAbaixado = true;
     mario.src = "./image/abaixar.png";
     mario.style.width = "55px";
@@ -131,15 +176,15 @@ const agaichar = () => {
 };
 
 // Mario se abaixa
-document.addEventListener('keydown', (e) => {
-  if(e.code === "ArrowDown" && !gameOverFlag) {
-    agaichar();
-  } 
+document.addEventListener("keydown", (e) => {
+  if (e.code === "ArrowDown" && !gameOverFlag || e.code === "KeyS" && !gameOverFlag) {
+    agachar();
+  }
 });
 
 // Mario vai se levantar
 document.addEventListener("keyup", (e) => {
-  if(e.code === "ArrowDown" && !gameOverFlag) {
+  if (e.code === "ArrowDown" && !gameOverFlag || e.code === "KeyS" && !gameOverFlag) {
     marioAbaixado = false;
     mario.src = "./image/mario.gif";
     mario.style.width = "110px";
@@ -158,10 +203,10 @@ const validateInput = ({ target }) => {
 // Enviar o formulário
 const handleSubimit = (e) => {
   e.preventDefault();
-  
+
   // Salva o nome do jogador no localStorage
   localStorage.setItem("player", input.value);
-  
+
   // Redireciona para o jogo
   window.location = "game.html";
 };
@@ -171,6 +216,5 @@ form.addEventListener("submit", handleSubimit);
 
 // Espera o usuário clicar no botão para iniciar o áudio
 document.getElementById("start-button").addEventListener("click", function () {
-  const som = document.getElementById("som");
   som.play(); // Inicia o som
 });
