@@ -1,17 +1,3 @@
-let pontos = 0; // Inicializa a variável de pontos
-const contador = document.querySelector(".contador"); // Referência para o elemento da pontuação
-
-// Flag para verificar se o jogo terminou
-let gameOverFlag = false;
-
-// Função para incrementar a pontuação
-const incrementarPontos = () => {
-  if (!gameOverFlag) {
-    // Verifica se o jogo não acabou
-    pontos = Math.floor((pontos + 0.11) * 10) / 10;
-    contador.textContent = `${Math.floor(pontos)}`; // Atualiza a pontuação na tela
-  }
-};
 
 // Referências para os elementos
 const mario = document.querySelector(".mario");
@@ -31,6 +17,21 @@ const somMorteMario = document.getElementById("somMorteMario");
 const gameOver = document.getElementById("gameOver");
 const mute = document.getElementById("mute");
 const unmute = document.getElementById("unmute");
+
+let pontos = 0; // Inicializa a variável de pontos
+const contador = document.querySelector(".contador"); // Referência para o elemento da pontuação
+
+// Flag para verificar se o jogo terminou
+let gameOverFlag = false;
+
+// Função para incrementar a pontuação
+const incrementarPontos = () => {
+  if (!gameOverFlag) {
+    // Verifica se o jogo não acabou
+    pontos = Math.floor((pontos + 0.11) * 10) / 10;
+    contador.textContent = `${Math.floor(pontos)}`; // Atualiza a pontuação na tela
+  }
+};
 
 // Volume das musicas
 somPulo.volume = 0.1;
@@ -139,13 +140,13 @@ const loop = setInterval(() => {
     mario.src = "./image/game-over.png";
     mario.style.width = "55px";
     mario.style.marginLeft = "40px";
-    mario.style.animation = "dead 1s ease";
+    mario.style.animation = "dead 2s ease";
     mario.style.top = "200%";
     somPulo.pause();
 
     // Exibe o Game Over
     theEnd.style.bottom = "0px";
-    theEnd.style.animation = "nome-game-over 3s ease ";
+    theEnd.style.animation = "nome-game-over 8.8s ease ";
 
     const som = document.getElementById("som");
     som.pause();
@@ -193,7 +194,7 @@ document.addEventListener("keyup", (e) => {
 
 // Object destructuring para validar o input
 const validateInput = ({ target }) => {
-  if (target.value.length > 2) {
+  if (target.value.length > 3) {
     button.removeAttribute("disabled");
   } else {
     button.setAttribute("disabled", "");
