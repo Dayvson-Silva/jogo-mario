@@ -160,7 +160,7 @@ const loop = setInterval(() => {
 }, 10);
 
 // Mario pulo usando space (keys de pulo)
-document.addEventListener("keypress", (e) => {
+document.addEventListener("keydown", (e) => {
   if (e.code === "Space" && !gameOverFlag || e.code === "KeyW" && !gameOverFlag || e.code === "ArrowUp" && !gameOverFlag) {
     jump();
   }
