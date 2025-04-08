@@ -137,13 +137,15 @@ const loop = setInterval(() => {
     mario.src = "./image/game-over.png";
     mario.style.width = "55px";
     mario.style.marginLeft = "40px";
-    mario.style.animation = "dead 2s ease";
+    mario.style.animation = "dead 1.5s ease";
     mario.style.bottom = "-100%";
     somPulo.pause();
 
     // Exibe o Game Over
-    theEnd.style.bottom = "0px";
-    theEnd.style.animation = "nome-game-over 8.8s ease ";
+    setInterval(() => {
+      theEnd.style.bottom = "0px";
+      theEnd.style.animation = "nome-game-over 4.6s linear";
+    }, 2900)
 
     const som = document.getElementById("som");
     som.pause();
