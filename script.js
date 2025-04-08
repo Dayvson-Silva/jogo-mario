@@ -5,9 +5,6 @@ const pipe = document.querySelector(".pipe");
 const bill = document.querySelector(".bill");
 const abaixar = document.querySelector(".abaixar");
 const menu = document.getElementById("login");
-const input = document.getElementById("username");
-const button = document.getElementById("start-button");
-const form = document.querySelector(".login-forma");
 const theEnd = document.getElementById("game-over");
 
 // Audio
@@ -141,7 +138,7 @@ const loop = setInterval(() => {
     mario.style.width = "55px";
     mario.style.marginLeft = "40px";
     mario.style.animation = "dead 2s ease";
-    mario.style.top = "200%";
+    mario.style.bottom = "-100%";
     somPulo.pause();
 
     // Exibe o Game Over
@@ -192,30 +189,5 @@ document.addEventListener("keyup", (e) => {
   }
 });
 
-// Object destructuring para validar o input
-const validateInput = ({ target }) => {
-  if (target.value.length > 3) {
-    button.removeAttribute("disabled");
-  } else {
-    button.setAttribute("disabled", "");
-  }
-};
 
-// Enviar o formulário
-const handleSubimit = (e) => {
-  e.preventDefault();
 
-  // Salva o nome do jogador no localStorage
-  localStorage.setItem("player", input.value);
-
-  // Redireciona para o jogo
-  window.location = "game.html";
-};
-
-input.addEventListener("input", validateInput);
-form.addEventListener("submit", handleSubimit);
-
-// Espera o usuário clicar no botão para iniciar o áudio
-document.getElementById("start-button").addEventListener("click", function () {
-  som.play(); // Inicia o som
-});

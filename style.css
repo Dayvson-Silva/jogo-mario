@@ -118,17 +118,18 @@ body {
 
 @keyframes dead {
   0% {
-    top: 89%;
+    bottom: 0%;
   }
   50% {
-    top: 85%;
+    bottom: 10%;
   }
   60% {
-    top: 70%;
+    bottom: 15%;
   }
   100% {
-    top: 200%;
+    bottom: -100%;
   }
+
 }
 
 /* LOGIN DO GAME  */
