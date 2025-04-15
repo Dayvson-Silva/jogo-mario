@@ -250,3 +250,27 @@ body {
 #unmute {
   display: none;
 }
+
+#mobile-controls {
+  position: fixed;
+  bottom: 20px;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  z-index: 1000;
+}
+
+#mobile-controls button {
+  width: 100px;
+  height: 60px;
+  font-size: 18px;
+  font-weight: bold;
+  background-color: #f1c40f;
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+  cursor: pointer;
+}
+

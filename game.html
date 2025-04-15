@@ -8,8 +8,8 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
     />
-    <link rel="stylesheet" href="response.css">
     <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="response.css">
 
     <script src="script.js" defer></script>
   </head>
@@ -45,11 +45,16 @@
     <!-- Tela de game-over -->
     <div id="game-over">
       <h3>Game Over</h3>
-      <img
+      <img class="image-mario-game-over"
         src="./image/png-transparent-super-mario-64-luigi-princess-peach-tired-heroes-hand-cartoon-removebg-preview.png"
         alt=""
       />
       <button onclick="window.location.reload()" id="reset">Reset</button>
+    </div>
+    <!-- para dispositivo movel -->
+    <div id="mobile-controls">
+      <button id="btn-jump">Pular</button>
+      <button id="btn-down">Abaixar</button>
     </div>
   </body>
 </html>

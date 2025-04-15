@@ -15,6 +15,27 @@ const gameOver = document.getElementById("gameOver");
 const mute = document.getElementById("mute");
 const unmute = document.getElementById("unmute");
 
+// Botões mobile
+const btnJump = document.getElementById("btn-jump");
+const btnDown = document.getElementById("btn-down");
+
+btnJump.addEventListener("touchstart", () => {
+  if (!gameOverFlag) jump();
+});
+
+btnDown.addEventListener("touchstart", () => {
+  if (!gameOverFlag) agachar();
+});
+
+btnDown.addEventListener("touchend", () => {
+  if (!gameOverFlag) {
+    marioAbaixado = false;
+    mario.src = "./image/mario.gif";
+    mario.style.width = "110px";
+  }
+});
+
+
 let pontos = 0; // Inicializa a variável de pontos
 const contador = document.querySelector(".contador"); // Referência para o elemento da pontuação
 
