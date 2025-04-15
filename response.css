@@ -156,8 +156,3 @@
     }
   }
   
-  @media (max-width: 767px) {
-    #mobile-controls {
-      display: flex; /* Exibe os botões em telas menores */
-    } 
-  }  
